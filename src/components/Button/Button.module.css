@@ -28,3 +28,9 @@
   box-shadow: 0 10px 40px 0 rgba(122, 129, 190, 0.16);
   text-transform: uppercase;
 }
+
+.with-icon {
+  padding: 300px;
+  display: flex;
+  align-items: center;
+}
