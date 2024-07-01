@@ -1,13 +1,10 @@
 .button {
-  border-radius: 6px;
-  padding: 8px 30px;
   font-family: var(--font-family);
   cursor: pointer;
   transition: border-color 0.25s;
-  font-size: 16px;
   border: none;
-  width: 135px;
   color: var(--white-color);
+  border-radius: 29px;
 }
 
 .accent {
@@ -16,4 +13,18 @@
 
 .accent:hover {
   background-color: var(--primary-hover-color);
+}
+
+.small {
+  padding: 10px 25px;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.big {
+  padding: 20px 60px;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  box-shadow: 0 10px 40px 0 rgba(122, 129, 190, 0.16);
+  text-transform: uppercase;
 }
