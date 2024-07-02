@@ -1,0 +1,23 @@
+.input {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  border: 1px solid #efefef;
+  border-radius: 10px;
+  box-shadow: 15px 20px 45px 0 rgba(233, 233, 233, 0.25);
+  background-color: #fcfcfd;
+  padding: 16px 30px 16px 44px;
+  color: #9aa0b4;
+  color: var(--text-color);
+  min-width: 200px;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  left: 17px;
+  top: 19px;
+}

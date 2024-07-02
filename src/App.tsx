@@ -12,6 +12,7 @@ import { MouseEvent } from 'react';
 import { Menu } from './pages/Menu/Menu';
 import { Cart } from './pages/Cart/Cart';
 import { Error } from './pages/Error/Erorr';
+import Header from './components/Headling/Headling';
 
 function App() {
   const [counter, setCounter] = useState<number>(0);

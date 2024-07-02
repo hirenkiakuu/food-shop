@@ -81,3 +81,8 @@
   width: 26px;
   height: 26px;
 }
+
+.content {
+  padding: 40px 60px;
+  width: 100%;
+}
