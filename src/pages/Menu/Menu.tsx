@@ -6,6 +6,7 @@ import { PREFIX } from '../../helpers/API';
 import { Product } from '../../interfaces/product.interface';
 import axios, { AxiosError } from 'axios';
 import styles from './Menu.module.css';
+import { MenuList } from './MenuList/MenuList';
 
 export function Menu() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -15,12 +16,7 @@ export function Menu() {
   const getMenu = async () => {
     try {
       setIsLoading(true);
-      await new Promise<void>((resolve) => {
-        setTimeout(() => {
-          resolve();
-        }, 2000);
-      });
-
+     
       const { data } = await axios.get<Product[]>(`${PREFIX}/products`);
       setProducts(data);
       setIsLoading(false);
@@ -46,20 +42,11 @@ export function Menu() {
       </div>
       <div>
         {error && <>{error}</>}
-        {!isLoading &&
-          products.map((product) => (
-            <ProductCard
-              key={product.id}
-              id={product.id}
-              name={product.name}
-              description={product.ingredients.join(', ')}
-              price={product.price}
-              rating={product.rating}
-              image={product.image}
-            />
-          ))}
+        {!isLoading && <MenuList products={products} />}
         {isLoading && <>Загружаем продукты....</>}
       </div>
     </>
   );
 }
+
+export default Menu;
