@@ -1,9 +1,16 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import styles from './Layout.module.css';
 import cn from 'classnames';
 
 export function Layout() {
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    navigate('/auth/login');
+  };
+
   return (
     <>
       <div className={styles['layout']}>
@@ -43,7 +50,7 @@ export function Layout() {
               </NavLink>
             </div>
           </div>
-          <Button className={styles['with-icon']}>
+          <Button className={styles['with-icon']} onClick={logout}>
             <img className={styles['exit-icon']} src="/exit.png" alt="" />
             Выйти
           </Button>

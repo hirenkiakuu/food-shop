@@ -6,21 +6,29 @@ import { Layout } from './layout/Menu/Layout';
 // import { Menu } from './pages/Menu/Menu';
 import { Cart } from './pages/Cart/Cart.tsx';
 import { Error } from './pages/Error/Erorr.tsx';
-import Product from './pages/Product/Product.tsx';
+import Product from './pages/Product/ProductPage.tsx';
 import { PREFIX } from './helpers/API.ts';
 import axios from 'axios';
+import AuthLayout from './layout/Auth/AuthLayout.tsx';
+import Login from './pages/Login/Login.tsx';
+import Register from './pages/Register/Register.tsx';
+import { RequireAuth } from './helpers/RequireAuth.tsx';
 
 const Menu = lazy(() => import('./pages/Menu/Menu')); // сэкономит пару килобайт, обычно оборачиваются верхние компоненты
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: (
+      <RequireAuth>
+        <Layout />
+      </RequireAuth>
+    ),
     children: [
       {
         path: '/',
         element: (
-          <Suspense fallback={<>Загрузка...</>}>
+          <Suspense fallback={<div>Загрузка...</div>}>
             <Menu />
           </Suspense>
         ),
@@ -32,27 +40,33 @@ const router = createBrowserRouter([
       {
         path: '/product/:id',
         element: <Product />,
-        errorElement: <>Ошибка</>,
+        errorElement: <div>Ошибка</div>,
         loader: async ({ params }) => {
           return defer({
             data: new Promise((resolve, reject) => {
-            setTimeout(() => {
-              axios.get(`${PREFIX}/products/${params.id}`).then(data => resolve(data)).catch(e => reject(e));
-            }, 2000)
-            })
-          // return defer({
-          //   data: axios
-          //     .get(`${PREFIX}/products/${params.id}`)
-          //     .then((data) => data),
-          // });
-          // await new Promise<void>((resolve) => {
-          //   setTimeout(() => {
-          //     resolve();
-          //   }, 2000);
-          // });
-          // const { data } = await axios.get(`${PREFIX}/products/${params.id}`);
-          // return data;
+              setTimeout(() => {
+                axios
+                  .get(`${PREFIX}/products/${params.id}`)
+                  .then((response) => resolve(response.data))
+                  .catch((error) => reject(error));
+              }, 2000);
+            }),
           });
+        },
+      },
+    ],
+  },
+  {
+    path: '/auth',
+    element: <AuthLayout />,
+    children: [
+      {
+        path: 'login',
+        element: <Login />,
+      },
+      {
+        path: 'register',
+        element: <Register />,
       },
     ],
   },
@@ -65,5 +79,5 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
+  </React.StrictMode>,
 );

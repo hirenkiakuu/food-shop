@@ -3,7 +3,7 @@ import { Product } from '../../interfaces/product.interface';
 import styles from './Product.module.css';
 import { Suspense } from 'react';
 
-const Product = () => {
+const ProductPage = () => {
   const data = useLoaderData() as { data: Product };
 
   return (
@@ -17,4 +17,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default ProductPage;
