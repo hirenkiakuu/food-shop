@@ -2,12 +2,16 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import styles from './Layout.module.css';
 import cn from 'classnames';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/store';
+import { userActions } from '../../store/user.slice';
 
 export function Layout() {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
   const logout = () => {
-    localStorage.removeItem('token');
+    dispatch(userActions.logout());
     navigate('/auth/login');
   };
 

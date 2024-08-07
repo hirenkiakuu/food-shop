@@ -3,13 +3,10 @@ import Button from '../../components/Button/Button';
 import Headling from '../../components/Headling/Headling';
 import Input from '../../components/Input/Input';
 import styles from './Login.module.css';
-import { FormEvent, useState } from 'react';
-import axios, { AxiosError } from 'axios';
-import { PREFIX } from '../../helpers/API';
-import { LoginResponse } from '../../interfaces/auth.interface';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store/store';
-import { userActions } from '../../store/user.slice';
+import { FormEvent, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import { login, userActions } from '../../store/user.slice';
 
 export type LoginForm = {
   email: {
@@ -21,41 +18,37 @@ export type LoginForm = {
 };
 
 const Login = () => {
-  const [error, setError] = useState<string | null>();
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const { jwt, loginErrorMessage } = useSelector((s: RootState) => s.user);
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     const target = e.target as typeof e.target & LoginForm;
+    dispatch(userActions.clearLoginError());
     const { email, password } = target;
     console.log(email.value);
     console.log(password.value);
-    setError(null);
+    // setError(null);
     await sendLogin(email.value, password.value);
   };
 
-  const sendLogin = async (email: string, password: string) => {
-    try {
-      const { data } = await axios.post<LoginResponse>(`${PREFIX}/auth/login`, {
-        email,
-        password,
-      });
-      console.log(data);
-      dispatch(userActions.addJwt(data.access_token));
+  useEffect(() => {
+    if (jwt) {
       navigate('/');
-    } catch (err) {
-      if (err instanceof AxiosError) {
-        console.log(err);
-        setError(err.response?.data.message);
-      }
     }
+  }, [jwt, navigate]);
+
+  const sendLogin = async (email: string, password: string) => {
+    dispatch(login({ email, password }));
   };
 
   return (
     <>
       <div className={styles['login']}>
-        {error && <div className={styles['error']}>{error}</div>}
+        {loginErrorMessage && (
+          <div className={styles['error']}>{loginErrorMessage}</div>
+        )}
         <Headling className={styles['form-header']}>Вход</Headling>
         <form onSubmit={submit}>
           <div className={styles['form-container-inner']}>
