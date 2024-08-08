@@ -2,13 +2,19 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import styles from './Layout.module.css';
 import cn from 'classnames';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store/store';
-import { userActions } from '../../store/user.slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import { getProfile, userActions } from '../../store/user.slice';
+import { useEffect } from 'react';
 
 export function Layout() {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const profile = useSelector((s: RootState) => s.user.profile);
+
+  useEffect(() => {
+    dispatch(getProfile());
+  }, [dispatch]);
 
   const logout = () => {
     dispatch(userActions.logout());
@@ -25,8 +31,8 @@ export function Layout() {
               src="/avatar.png"
               alt="аватарка"
             />
-            <h1>Иван Иванов</h1>
-            <p>alaricode@ya.ru</p>
+            <h1>{profile?.name}</h1>
+            <p>{profile?.email}</p>
           </div>
           <div className={styles['sidebar__navigation']}>
             <div className={styles['navigation-links']}>
