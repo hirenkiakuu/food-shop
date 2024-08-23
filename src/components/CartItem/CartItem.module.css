@@ -1,0 +1,74 @@
+.item {
+  display: flex;
+  gap: 20px;
+  max-width: 512px;
+  margin-bottom: 27px;
+}
+
+.actions {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+  align-self: flex-start;
+}
+
+.image {
+  width: 82px;
+  height: 82px;
+  box-shadow: drop-shadow(0px 8px 25px rgba(224, 219, 196, 0.9));
+  border-radius: 20px;
+}
+
+.description {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.name {
+  color: var(--text-color);
+  font-size: 18px;
+}
+
+.price {
+  color: var(--primary-color);
+}
+
+.minus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  width: 29px;
+  height: 29px;
+  border: 1px solid var(--primary-color);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.plus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  width: 29px;
+  height: 29px;
+  border: 1px solid var(--primary-color);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.remove {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  width: 29px;
+  height: 29px;
+  border: none;
+  cursor: pointer;
+}
+
+.number {
+  color: var(--text-color);
+}
